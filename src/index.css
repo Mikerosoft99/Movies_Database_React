@@ -61,3 +61,13 @@ code {
   border-radius: 10px;
   width: 20rem;
 }
+.custom-input-dark{
+  background-color: #353535 !important;
+  border: 1px #3292D1 solid !important;
+  padding: 6px 15px !important;
+  color: rgb(203, 230, 254) !important;
+}
+
+.custom-input-dark::placeholder {
+  color: rgb(203, 230, 254) !important;
+}

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 function AllMovies() {
     const [movies, setMovies] = useState([]);
     const [Search, setSearch] = useState('');
-    const [currentList, setCurrentList] = useState('now_playing'); // Default to 'now_playing'
+    const [currentList, setCurrentList] = useState('popular');
 
     const apiKey = '8905e08e3a3707818f8ff36e0dc4df18';
 
@@ -55,7 +55,7 @@ function AllMovies() {
                             placeholder="Search for movies..."
                             value={Search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="mx-3"
+                            className="mx-3 custom-input-dark"
                         />
                         <Button variant="outline-primary" onClick={handleSearch}>
                             <b>Search</b>
