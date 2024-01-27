@@ -1,13 +1,63 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #353535 !important;
+  font-family: "Arial", sans-serif !important;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.nav-link {
+  font-weight: 600 !important;
+}
+
+/* NotFound Page */
+#notfound-h2 {
+  color: #ff5d5d;
+}
+
+#notfound-p {
+  color: #ffffff;
+  font-size: 1.5em;
+}
+
+#notfound-div {
+  margin-top: 30vh;
+  height: 100vh;
+  text-align: center;
+}
+
+.allmovies-title {
+  color: #3292d1;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.navbar {
+  background-color: #1e1e1e;
+  font-size: 1.2em;
+}
+
+.nav-link {
+  color: #2576ac;
+  border-radius: 20px;
+  transition: 0.5s ease;
+}
+
+.nav-link:hover {
+  background-color: #2576ac;
+  border-radius: 20px;
+  transition: 0.5s ease;
+}
+
+.movie-card {
+  background-color: rgb(5, 84, 133) !important;
+  color: #f7e9e9 !important;
+  text-align: center;
+}
+
+.movieimage {
+  border-radius: 10px;
+  width: 20rem;
 }
