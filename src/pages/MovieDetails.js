@@ -30,10 +30,11 @@ const MovieDetails = ({ movie }) => {
                 <Col md={8} className="movie-info">
                     <h2>{original_title}</h2>
                     <p><b>Release Date:</b> {release_date}</p>
-                    <p><b>Vote Average:</b> {vote_average}</p>
-                    <StarsMeter voteAverage={vote_average} />
+                    <p><b>Rating:</b> <span id='vote-average'> {vote_average !== undefined && vote_average.toFixed(1)} </span><sup>/10</sup>
+                        <StarsMeter voteAverage={vote_average} />
+                    </p>
                     <p><b>Runtime:</b> {runtime} minutes</p>
-                    <p><b>Overview:</b> {overview}</p>
+                    <p style={{ lineHeight: '1.8' }}><b>Overview:</b> {overview}</p>
                 </Col>
             </Row>
         </Container>

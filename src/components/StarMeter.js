@@ -7,7 +7,7 @@ const StarsMeter = ({ voteAverage }) => {
     const starIcons = Array.from({ length: maxStars }, (_, index) => (
         <i
             key={index}
-            className={`mb-3 fas fa-star${index < rating && ''}`}
+            className={`mt-2 fas fa-star${index < rating && ''}`}
         ></i>
     ));
 
