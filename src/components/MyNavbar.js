@@ -4,8 +4,11 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function MyNavbar() {
+  const favoritesCount = useSelector((state) => state.favorites.favoritesCount || 0);
+
   return (
     <Navbar expand="lg" className="navbar">
       <Container>
@@ -14,7 +17,7 @@ function MyNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link className='text-light' as={Link} to="/movies">Movies</Nav.Link>
-            <Nav.Link className='text-light' as={Link} to="/favorites">Favorites</Nav.Link>
+            <Nav.Link className='text-light' as={Link} to="/favorites">Favorites {favoritesCount > 0 && `(${favoritesCount})`}</Nav.Link>
           </Nav>
           <Nav className="ml-auto">
             <Nav.Link className='text-light' as={Link} to="/login">Login</Nav.Link>
