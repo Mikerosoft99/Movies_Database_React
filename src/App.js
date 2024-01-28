@@ -9,11 +9,13 @@ import RegistrationForm from './components/RegistrationForm';
 import LoginForm from './components/LoginForm';
 import Movie from './components/Movie';
 import FavoritesList from './pages/FavoritesList';
+import { LanguageProvider } from './context/LanguageContext';
 
 function App() {
   return (
     <>
       <BrowserRouter>
+      <LanguageProvider>
         <MyNavbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -24,6 +26,7 @@ function App() {
           <Route path="/login" element={<LoginForm />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
+        </LanguageProvider>
       </BrowserRouter>
     </>
   );

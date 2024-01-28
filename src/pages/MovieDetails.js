@@ -1,9 +1,12 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import StarsMeter from '../components/StarMeter';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToFavorites, removeFromFavorites } from '../store/actions/ToggleFav';
 
 
 const MovieDetails = ({ movie }) => {
+    // Destructuring movie details
     const {
         original_title,
         poster_path,
@@ -13,6 +16,10 @@ const MovieDetails = ({ movie }) => {
         runtime,
     } = movie;
 
+    const dispatch = useDispatch();
+    const favoritesArr = useSelector((state) => state.favorites.favorites);
+    
+    // Generate the image URL based on poster_path
     const imageUrl = poster_path
         ? `https://image.tmdb.org/t/p/w500/${poster_path}`
         : `${process.env.PUBLIC_URL}/movie-poster-notfound.jpg`;
@@ -34,6 +41,19 @@ const MovieDetails = ({ movie }) => {
                     <StarsMeter voteAverage={vote_average} />
                     <p className='my-2'><b>Runtime:</b> {runtime} minutes</p>
                     <p style={{ lineHeight: '1.8' }}><b>Overview:</b> {overview}</p>
+                    <Button
+                        className='mt-3'
+                        variant="outline-info"
+                        onClick={() =>
+                            favoritesArr.some((favMovie) => favMovie.id === movie.id)
+                                ? dispatch(removeFromFavorites(movie.id))
+                                : dispatch(addToFavorites({ id: movie.id, poster_path: movie.poster_path, original_title: movie.original_title }))
+                        }
+                    >
+                        {favoritesArr.some((favMovie) => favMovie.id === movie.id)
+                            ? 'Remove from Favorites'
+                            : 'Add to Favorites'}
+                    </Button>
                 </Col>
             </Row>
         </Container>

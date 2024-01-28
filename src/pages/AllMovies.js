@@ -1,45 +1,53 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Card, Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToFavorites, removeFromFavorites } from '../store/actions/ToggleFav';
+import axiosInstance from '../store/actions/axiosInter';
+import { fetchMoviesError, fetchMoviesSuccess } from '../store/actions/FetchMovies';
+import { useLanguage } from '../context/LanguageContext';
 
 function AllMovies() {
-    const [movies, setMovies] = useState([]);
+    const dispatch = useDispatch();
+    const movies = useSelector((state) => state.movies.movies);
     const [Search, setSearch] = useState('');
     const [currentList, setCurrentList] = useState('popular');
-
-    const dispatch = useDispatch();
+    const { language } = useLanguage();
     const favoritesArr = useSelector((state) => state.favorites.favorites);
-
     const apiKey = '8905e08e3a3707818f8ff36e0dc4df18';
 
+    // Function to fetch movies from the API
     const getMovies = (url) => {
-        axios.get(url)
+        dispatch(fetchMoviesError(null)); // Clear previous errors
+        axiosInstance.get(url)
             .then(response => {
-                setMovies(response.data.results);
-                // console.log(response.data.results);
+                dispatch(fetchMoviesSuccess(response.data.results));
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
+                dispatch(fetchMoviesError(error.message));
             });
     };
 
-    // For Movies List Changing
+    // Fetch movies on initial load and when language or currentList changes
     useEffect(() => {
-        const url = `https://api.themoviedb.org/3/movie/${currentList}?api_key=${apiKey}`;
+        const url = `https://api.themoviedb.org/3/movie/${currentList}?language=${language}&api_key=${apiKey}`;
         getMovies(url);
-    }, [currentList]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentList, language]);
 
-    const handleListChange = (list) => {
-        setCurrentList(list);
-    };
+    // Fetch movies when searching or when language or currentList changes
+    useEffect(() => {
+        const url = Search
+            ? `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${Search}`
+            : `https://api.themoviedb.org/3/movie/${currentList}?language=${language}&api_key=${apiKey}`;
+        getMovies(url);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentList, language, Search]);
 
-    // For Searching
     const handleSearch = () => {
-        const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${Search}`;
-        getMovies(searchUrl);
+        const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${Search}&page=1`;
+        getMovies(url);
     };
 
     return (
@@ -49,9 +57,9 @@ function AllMovies() {
             <Container fluid>
                 <Row className="text-center justify-content-center my-3">
                     <div>
-                        <Button className='mx-2' variant="primary" onClick={() => handleListChange('popular')}>Popular</Button>
-                        <Button className='mx-2' variant="primary" onClick={() => handleListChange('now_playing')}>Now Playing</Button>
-                        <Button className='mx-2' variant="primary" onClick={() => handleListChange('top_rated')}>Top Rated</Button>
+                        <Button className='mx-2' variant="primary" onClick={() => setCurrentList('popular')}>Popular</Button>
+                        <Button className='mx-2' variant="primary" onClick={() => setCurrentList('now_playing')}>Now Playing</Button>
+                        <Button className='mx-2' variant="primary" onClick={() => setCurrentList('top_rated')}>Top Rated</Button>
                     </div>
                 </Row>
                 <Row className="justify-content-center">
