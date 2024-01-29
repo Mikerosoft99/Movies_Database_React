@@ -119,3 +119,11 @@ i {
   transform: translateY(-10px);
   transform: scale(1.3);
 }
+
+.fa-film {
+  color: #ffffff;
+}
+
+.fa-film:hover {
+  transform: none;
+}

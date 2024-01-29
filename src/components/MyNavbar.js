@@ -19,7 +19,7 @@ function MyNavbar() {
   return (
     <Navbar expand="lg" className="navbar">
       <Container>
-        <Navbar.Brand className='text-light font-weight-bold' as={Link} to="/">IMDBK</Navbar.Brand>
+        <Navbar.Brand className='text-light font-weight-bold' as={Link} to="/"><i className="fas fa-film"></i> <b>KMDb</b></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
