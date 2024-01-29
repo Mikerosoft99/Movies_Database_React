@@ -12,6 +12,7 @@ function AllMovies() {
     const movies = useSelector((state) => state.movies.movies);
     const [Search, setSearch] = useState('');
     const [currentList, setCurrentList] = useState('popular');
+    const [page, setPage] = useState(1);
     const { language } = useLanguage();
     const favoritesArr = useSelector((state) => state.favorites.favorites);
     const apiKey = '8905e08e3a3707818f8ff36e0dc4df18';
@@ -29,25 +30,29 @@ function AllMovies() {
             });
     };
 
-    // Fetch movies on initial load and when language or currentList changes
+    // Fetch movies on initial load and when language, currentList, or page changes
     useEffect(() => {
-        const url = `https://api.themoviedb.org/3/movie/${currentList}?language=${language}&api_key=${apiKey}`;
+        const url = `https://api.themoviedb.org/3/movie/${currentList}?language=${language}&api_key=${apiKey}&page=${page}`;
         getMovies(url);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentList, language]);
+    }, [currentList, language, page]);
 
-    // Fetch movies when searching or when language or currentList changes
+    // Fetch movies when searching or when language, currentList, or page changes
     useEffect(() => {
         const url = Search
-            ? `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${Search}`
-            : `https://api.themoviedb.org/3/movie/${currentList}?language=${language}&api_key=${apiKey}`;
+            ? `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${Search}&page=${page}`
+            : `https://api.themoviedb.org/3/movie/${currentList}?language=${language}&api_key=${apiKey}&page=${page}`;
         getMovies(url);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentList, language, Search]);
+    }, [currentList, language, Search, page]);
 
     const handleSearch = () => {
         const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${Search}&page=1`;
         getMovies(url);
+    };
+
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
     };
 
     return (
@@ -76,9 +81,28 @@ function AllMovies() {
                         </Button>
                     </Col>
                 </Row>
-                <Row>
+                <div className='text-center mb-3'>
+                    <Button
+                        variant="btn btn-primary"
+                        onClick={() => handlePageChange(page - 1)}
+                        disabled={page === 1}
+                        className="mx-2 d-inline"
+                    >
+                        Previous
+                    </Button>
+                    <h6 className="mx-2 d-inline text-light"><b>{page}</b></h6>
+                    <Button
+                        variant="btn btn-primary"
+                        onClick={() => handlePageChange(page + 1)}
+                        disabled={movies.length === 0} // Disable if no more movies on the next page
+                        className="mx-2 d-inline"
+                    >
+                        Next
+                    </Button>
+                </div>
+                <Row className='justify-content-around p-3'>
                     {movies.map((movie) => (
-                        <Col key={movie.id} xs={12} sm={6} md={4} lg={3} xl={2}>
+                        <Col key={movie.id} xs={12} sm={6} md={4} lg={3} xl={3}>
                             <Card className='movie-card' style={{ marginBottom: '20px', position: 'relative' }}>
                                 <Link to={`/movies/${movie.id}`} style={{ textDecoration: 'none', display: 'block' }}>
                                     <Card.Img
@@ -105,6 +129,25 @@ function AllMovies() {
                         </Col>
                     ))}
                 </Row>
+                <div className='text-center mb-3'>
+                    <Button
+                        variant="btn btn-primary"
+                        onClick={() => handlePageChange(page - 1)}
+                        disabled={page === 1}
+                        className="mx-2 d-inline"
+                    >
+                        Previous
+                    </Button>
+                    <h6 className="mx-2 d-inline text-light"><b>{page}</b></h6>
+                    <Button
+                        variant="btn btn-primary"
+                        onClick={() => handlePageChange(page + 1)}
+                        disabled={movies.length === 0} // Disable if no more movies on the next page
+                        className="mx-2 d-inline"
+                    >
+                        Next
+                    </Button>
+                </div>
             </Container>
         </div>
     );
