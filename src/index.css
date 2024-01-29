@@ -1,15 +1,6 @@
 body {
   background-color: #353535 !important;
-  font-family: "Arial", sans-serif !important;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-.nav-link {
-  font-weight: 600 !important;
+  font-family: "Roboto", sans-serif !important;
 }
 
 /* NotFound Page */
@@ -43,6 +34,10 @@ code {
   color: #2576ac;
   border-radius: 20px;
   transition: 0.5s ease;
+  font-weight: 600 !important;
+  width: fit-content;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
 }
 
 .nav-link:hover {
@@ -55,15 +50,27 @@ code {
   background-color: rgb(5, 84, 133) !important;
   color: #f7e9e9 !important;
   text-align: center;
+  transition: 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-10px);
+  transform: scale(1.05);
 }
 
 .movieimage {
   border-radius: 10px;
-  width: 20rem;
+  transition: 0.3s ease;
 }
-.custom-input-dark{
+
+.movieimage:hover {
+  transform: scale(1.025);
+}
+
+/* Search text-input */
+.custom-input-dark {
   background-color: #353535 !important;
-  border: 1px #3292D1 solid !important;
+  border: 1px #3292d1 solid !important;
   padding: 6px 15px !important;
   color: rgb(203, 230, 254) !important;
 }
@@ -72,15 +79,43 @@ code {
   color: rgb(203, 230, 254) !important;
 }
 
-#vote-average{
+#vote-average {
   font-size: 1.5rem;
 }
 
-p{
+p {
   margin: 0 !important;
 }
 
-i{
-  color:rgb(245, 245, 1);
+/* StarsMeter icon */
+i {
+  color: rgb(245, 245, 1);
   font-size: 1.2rem;
+}
+
+/* Favorites Badge */
+.custom-badge {
+  background-color: #2576ac;
+  border-radius: 25px;
+  font-weight: 600;
+  color: #fff;
+  padding: 0 10px;
+  user-select: none;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+.language-dropdown {
+  display: flex;
+  align-items: center;
+}
+
+.fas {
+  transition: all 0.5s ease;
+}
+
+.fas:hover {
+  transform: translateY(-10px);
+  transform: scale(1.3);
 }

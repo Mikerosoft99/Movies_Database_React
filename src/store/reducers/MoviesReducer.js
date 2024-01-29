@@ -29,5 +29,5 @@ const moviesReducer = (state = initialState, action) => {
     }
 };
 
-// Export the movies reducer for use in the Redux store
+
 export default moviesReducer;

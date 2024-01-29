@@ -1,15 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Card, Col, Row, Button, Container } from 'react-bootstrap';
+import { Card, Col, Row, Container } from 'react-bootstrap';
 import { removeFromFavorites } from '../store/actions/ToggleFav';
+import { Link } from 'react-router-dom';
 
 const FavoritesList = () => {
     const dispatch = useDispatch();
     const favoritesArr = useSelector((state) => state.favorites?.favorites || []);
-
-    const removeFromFavoritesHandler = (movieId) => {
-        dispatch(removeFromFavorites(movieId));
-    };
 
     return (
         <Container fluid>
@@ -22,19 +19,27 @@ const FavoritesList = () => {
                     {favoritesArr.map((movie) => (
                         <Col key={movie.id} xs={12} sm={6} md={4} lg={3} xl={2}>
                             <Card className='movie-card' style={{ marginBottom: '20px' }}>
-                                <Card.Img
-                                    variant="top"
-                                    src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                                    alt={movie.title}
-                                />
+                                <Link to={`/movies/${movie.id}`} style={{ textDecoration: 'none' }}>
+                                    <Card.Img
+                                        variant="top"
+                                        src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                                        alt={movie.original_title}
+                                    />
+                                </Link>
                                 <Card.Body>
-                                    <Card.Title>{movie.title}</Card.Title>
-                                    <Button
-                                        variant="outline-danger"
-                                        onClick={() => removeFromFavoritesHandler(movie.id)}
-                                    >
-                                        Remove from Favorites
-                                    </Button>
+                                    <Link to={`/movies/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        <Card.Title>{movie.original_title}</Card.Title>
+                                    </Link>
+                                    <div className="favorites-icon">
+                                        <i
+                                            className={`fas fa-heart${favoritesArr.some((favMovie) => favMovie.id === movie.id) ? ' text-danger' : '-broken text-danger'}`}
+                                            style={{ cursor: 'pointer', position: 'absolute', top: '15px', right: '15px', fontSize: '2rem' }}
+                                            onClick={() =>
+                                                favoritesArr.some((favMovie) => favMovie.id === movie.id)
+                                                && dispatch(removeFromFavorites(movie.id))
+                                            }
+                                        ></i>
+                                    </div>
                                 </Card.Body>
                             </Card>
                         </Col>

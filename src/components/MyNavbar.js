@@ -24,7 +24,12 @@ function MyNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link className='text-light' as={Link} to="/movies">Movies</Nav.Link>
-            <Nav.Link className='text-light' as={Link} to="/favorites">Favorites {favoritesCount > 0 && `(${favoritesCount})`}</Nav.Link>
+            <Nav.Link className='text-light' as={Link} to="/favorites">
+              Favorites
+            </Nav.Link>
+            {favoritesCount > 0 && (
+              <span className='custom-badge my-2 mx-1' >{`${favoritesCount}`}</span>
+            )}
             <Dropdown className="mx-2 language-dropdown">
               <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                 Language: {language.toUpperCase()}

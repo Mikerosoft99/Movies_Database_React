@@ -79,28 +79,27 @@ function AllMovies() {
                 <Row>
                     {movies.map((movie) => (
                         <Col key={movie.id} xs={12} sm={6} md={4} lg={3} xl={2}>
-                            <Card className='movie-card' style={{ marginBottom: '20px' }}>
-                                <Link to={`/movies/${movie.id}`} style={{ textDecoration: 'none' }}>
+                            <Card className='movie-card' style={{ marginBottom: '20px', position: 'relative' }}>
+                                <Link to={`/movies/${movie.id}`} style={{ textDecoration: 'none', display: 'block' }}>
                                     <Card.Img
                                         variant="top"
                                         src={movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : `${process.env.PUBLIC_URL}/movie-poster-notfound.jpg`}
                                         alt={movie.title}
                                     />
                                 </Link>
-                                <Card.Body>
-                                    <Card.Title>{movie.title}</Card.Title>
-                                    <Button
-                                        variant="outline-info"
+                                <div className="favorites-icon">
+                                    <i
+                                        className={`fas fa-heart${favoritesArr.some((favMovie) => favMovie.id === movie.id) ? ' text-danger' : '-broken text-danger'}`}
+                                        style={{ cursor: 'pointer', position: 'absolute', top: '15px', right: '15px', fontSize: '2rem' }}
                                         onClick={() =>
                                             favoritesArr.some((favMovie) => favMovie.id === movie.id)
                                                 ? dispatch(removeFromFavorites(movie.id))
                                                 : dispatch(addToFavorites({ id: movie.id, poster_path: movie.poster_path, original_title: movie.original_title }))
                                         }
-                                    >
-                                        {favoritesArr.some((favMovie) => favMovie.id === movie.id)
-                                            ? 'Remove from Favorites'
-                                            : 'Add to Favorites'}
-                                    </Button>
+                                    ></i>
+                                </div>
+                                <Card.Body>
+                                    <Card.Title>{movie.title}</Card.Title>
                                 </Card.Body>
                             </Card>
                         </Col>
